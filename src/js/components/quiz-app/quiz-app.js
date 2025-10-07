@@ -39,7 +39,12 @@ class QuizApp extends HTMLElement {
   /**
    * Attaches event listeners for user interactions
    */
-  attachEventListeners() {}
+  attachEventListeners() {
+    // listen for nickname-submitted
+    // handle nickname submission
+
+    // transition to the quiz: hide nickname form & show qui< elements
+  }
 
   // async getQuestion() 
   // async handleAnswer()
