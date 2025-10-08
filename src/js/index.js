@@ -6,5 +6,6 @@
  */
 
 import './components/quiz-app/quiz-app.js'
+import './components/nickname-form/nickname-form.js'
 
 console.log('index.js loaded!')
