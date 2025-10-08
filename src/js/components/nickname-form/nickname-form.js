@@ -43,7 +43,14 @@ class NicknameForm extends HTMLElement {
    */
   connectedCallback () {
     // listen for the event "submit"
-    // dispatch a custom event with the nickname for the quiz-app to use : nickname-submitted
+    this.shadowRoot.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      // dispatch a custom event with the nickname for the quiz-app to use : nickname-submitted
+      this.dispatchEvent(new CustomEvent('nickname-submitted', {
+        detail: { nickname: this.shadowRoot.querySelector('#nickname').value.trim()
+      }}))
+    })
   }
 }
 
