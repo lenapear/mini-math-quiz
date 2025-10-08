@@ -12,6 +12,7 @@ class QuizApp extends HTMLElement {
   constructor() {
     super()
     this.attachShadow({ mode: 'open' })
+    this.nickname = ''
   }
 
   /**
@@ -40,10 +41,27 @@ class QuizApp extends HTMLElement {
    * Attaches event listeners for user interactions
    */
   attachEventListeners() {
-    // listen for nickname-submitted
-    // handle nickname submission
+    this.listenForNicknameSubmitted()
+  }
 
-    // transition to the quiz: hide nickname form & show qui< elements
+  listenForNicknameSubmitted() {
+    const nicknameForm = this.shadowRoot.querySelector('nickname-form')
+    nicknameForm.addEventListener('nickname-submitted', this.handleNicknameSubmission.bind(this))
+  }
+
+  handleNicknameSubmission(event) {
+    this.nickname = event.detail.nickname
+    this.transitionToQuiz()
+  }
+
+  transitionToQuiz() {
+    const nicknameForm = this.shadowRoot.querySelector('nickname-form')
+    const quizQuestion = this.shadowRoot.querySelector('quiz-question')
+    const countdownTimer = this.shadowRoot.querySelector('countdown-timer')
+
+    nicknameForm.classList.add('hidden')
+    quizQuestion.classList.remove('hidden')
+    countdownTimer.classList.remove('hidden')
   }
 
   // async getQuestion() 
