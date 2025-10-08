@@ -8,24 +8,23 @@
 // Define the template for quiz-question
 const template = document.createElement('template')
 template.innerHTML = `
-    <style>
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            gap: 10px;
-        }
-    </style>
+  <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        gap: 10px;
+      }
+  </style>
 
-    <form>
-        <h2 id="question-text"></h2>
-        <div id="answer-container">
-            <!-- Default to a text input -->
-            <input type="text" id="answer" placeholder="Your answer">
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+  <form>
+    <h2 id="question-text"></h2>
+    <div id="answer-container">
+      <!-- Radio options will be injected here dynamically -->
+    </div>
+    <button type="submit">Submit</button>
+  </form>
 `
 
 /**
@@ -35,6 +34,8 @@ class QuizQuestion extends HTMLElement {
   constructor() {}
   connectedCallback() {}
   renderQuestion() {}
+  // clear whatever was previously in answer-container
+  // loop through each option for the question and dynamically add the radio buttons to the answer-container
   attachEventListeners() {}
   implementKeyboardNavigation() {} // keyboard navigation for multiple choice questions (vertical)
 }
