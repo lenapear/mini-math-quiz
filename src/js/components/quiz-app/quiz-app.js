@@ -42,6 +42,11 @@ class QuizApp extends HTMLElement {
    */
   attachEventListeners() {
     this.listenForNicknameSubmitted()
+
+    // to-do: quiz-question
+    // listen for answer-submitted
+    // handleAnswerSubmission
+
   }
 
   listenForNicknameSubmitted() {
@@ -64,8 +69,11 @@ class QuizApp extends HTMLElement {
     countdownTimer.classList.remove('hidden')
   }
 
-  // async getQuestion() 
-  // async handleAnswer()
+  // to-do: quiz-question
+  // async getQuestion(): get question and display it inside quiz-question
+  // async handleAnswerSubmission(): retrieve answer, evaluate answer, handleCorrectAnswer() & handleWrongAnswer()
+
+
   // stopTimer
   // endQuiz()
   // restartQuiz()
