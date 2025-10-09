@@ -30,7 +30,7 @@ class QuizApp extends HTMLElement {
       </style>
       
       <nickname-form></nickname-form> <!--add hidden when quiz starts-->
-      <difficulty-form></difficulty-form> <!--remove hidden when nickname is submitted-->
+      <difficulty-form class="hidden"></difficulty-form> <!--remove hidden when nickname is submitted-->
       <quiz-question class="hidden"></quiz-question> <!--remove hidden when quiz starts-->
       <countdown-timer class="hidden"></countdown-timer> <!--remove hidden when quiz starts-->
       <high-score class="hidden"></high-score> <!--remove hidden when quiz starts-->
@@ -44,9 +44,8 @@ class QuizApp extends HTMLElement {
    */
   attachEventListeners() {
     this.listenForNicknameSubmitted()
-    // to-do: difficulty-form
-    // listen for difficulty-submitted
-    // handleDifficultySubmission()
+
+    this.listenForDifficultySubmitted()
 
     // to-do: quiz-question
     // listen for answer-submitted
@@ -61,19 +60,33 @@ class QuizApp extends HTMLElement {
 
   handleNicknameSubmission(event) {
     this.nickname = event.detail.nickname
-    this.transitionToQuiz()
+    this.showDifficultyForm()
   }
 
-  transitionToQuiz() {
+  listenForDifficultySubmitted() {
+    const difficultyForm = this.shadowRoot.querySelector('difficulty-form')
+    difficultyForm.addEventListener('difficulty-submitted', this.handleDifficultySubmission.bind(this))
+  }
+
+  handleDifficultySubmission(event) {
+    this.difficulty = event.detail.difficulty
+    this.showQuiz()
+  }
+
+  showDifficultyForm() {
     const nicknameForm = this.shadowRoot.querySelector('nickname-form')
+    const difficultyForm = this.shadowRoot.querySelector('difficulty-form')
+
+    nicknameForm.classList.add('hidden')
+    difficultyForm.classList.remove('hidden')
+  }
+
+  showQuiz() {
     const quizQuestion = this.shadowRoot.querySelector('quiz-question')
     const countdownTimer = this.shadowRoot.querySelector('countdown-timer')
 
-    nicknameForm.classList.add('hidden')
     quizQuestion.classList.remove('hidden')
     countdownTimer.classList.remove('hidden')
-
-    // show difficulty-form before quiz starts
   }
 
   // to-do: quiz-question
