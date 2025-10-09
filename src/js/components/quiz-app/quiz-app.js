@@ -62,6 +62,11 @@ class QuizApp extends HTMLElement {
     this.showDifficultyForm()
   }
 
+  showDifficultyForm() {
+    this.nicknameForm.classList.add('hidden')
+    this.difficultyForm.classList.remove('hidden')
+  }
+
   listenForDifficultySubmitted() {
     this.difficultyForm.addEventListener('difficulty-submitted', this.handleDifficultySubmission.bind(this))
   }
@@ -71,26 +76,26 @@ class QuizApp extends HTMLElement {
     this.showQuiz()
   }
 
-  showDifficultyForm() {
-    this.nicknameForm.classList.add('hidden')
-    this.difficultyForm.classList.remove('hidden')
-  }
-
   showQuiz() {
     this.quizQuestion.classList.remove('hidden')
     this.countdownTimer.classList.remove('hidden')
   }
 
-  // to-do: quiz-question
-  async getQuestion() {
-  // getQuizDifficulty()
+  listenForAnswerSubmitted() {}
+
+  async handleAnswerSubmission() {} // should this be an async??
+  // retrieve answer
+  // evaluateAnswer()
+  // handleCorrectAnswer() 
+  // handleWrongAnswer ()
+
+  async getAndDisplayQuestion() {
   // retrieveEasyQuestion() and retrieveMediumQuestion()
-  // displayQuestion inside quiz-question
+  // display the question inside quiz-question h2 element id="question-text"
   }
 
-  // async handleAnswerSubmission(): retrieve answer, evaluate answer, handleCorrectAnswer() & handleWrongAnswer()
 
-  // later:
+  // add later:
   // stopTimer
   // endQuiz()
   // restartQuiz()
