@@ -13,6 +13,7 @@ class QuizApp extends HTMLElement {
     super()
     this.attachShadow({ mode: 'open' })
     this.nickname = ''
+    this.difficulty = ''
   }
 
   /**
@@ -29,6 +30,7 @@ class QuizApp extends HTMLElement {
       </style>
       
       <nickname-form></nickname-form> <!--add hidden when quiz starts-->
+      <difficulty-form></difficulty-form> <!--remove hidden when nickname is submitted-->
       <quiz-question class="hidden"></quiz-question> <!--remove hidden when quiz starts-->
       <countdown-timer class="hidden"></countdown-timer> <!--remove hidden when quiz starts-->
       <high-score class="hidden"></high-score> <!--remove hidden when quiz starts-->
@@ -42,6 +44,9 @@ class QuizApp extends HTMLElement {
    */
   attachEventListeners() {
     this.listenForNicknameSubmitted()
+    // to-do: difficulty-form
+    // listen for difficulty-submitted
+    // handleDifficultySubmission()
 
     // to-do: quiz-question
     // listen for answer-submitted
@@ -67,13 +72,20 @@ class QuizApp extends HTMLElement {
     nicknameForm.classList.add('hidden')
     quizQuestion.classList.remove('hidden')
     countdownTimer.classList.remove('hidden')
+
+    // show difficulty-form before quiz starts
   }
 
   // to-do: quiz-question
-  // async getQuestion(): get question and display it inside quiz-question (retrieveEasyQuestion and retrieveMediumQuestion)
+  async getQuestion() {
+  // getQuizDifficulty()
+  // retrieveEasyQuestion() and retrieveMediumQuestion()
+  // displayQuestion inside quiz-question
+  }
+
   // async handleAnswerSubmission(): retrieve answer, evaluate answer, handleCorrectAnswer() & handleWrongAnswer()
 
-
+  // later:
   // stopTimer
   // endQuiz()
   // restartQuiz()
