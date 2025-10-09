@@ -44,7 +44,6 @@ class NicknameForm extends HTMLElement {
   connectedCallback () {
     this.form = this.shadowRoot.querySelector('form')
     this.form.addEventListener('submit', this.handleSubmit.bind(this))
-
   }
 
   handleSubmit(event) {
