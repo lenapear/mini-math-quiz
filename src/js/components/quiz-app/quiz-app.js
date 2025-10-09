@@ -54,8 +54,7 @@ class QuizApp extends HTMLElement {
   }
 
   listenForNicknameSubmitted() {
-    const nicknameForm = this.shadowRoot.querySelector('nickname-form')
-    nicknameForm.addEventListener('nickname-submitted', this.handleNicknameSubmission.bind(this))
+    this.nicknameForm.addEventListener('nickname-submitted', this.handleNicknameSubmission.bind(this))
   }
 
   handleNicknameSubmission(event) {
@@ -64,8 +63,7 @@ class QuizApp extends HTMLElement {
   }
 
   listenForDifficultySubmitted() {
-    const difficultyForm = this.shadowRoot.querySelector('difficulty-form')
-    difficultyForm.addEventListener('difficulty-submitted', this.handleDifficultySubmission.bind(this))
+    this.difficultyForm.addEventListener('difficulty-submitted', this.handleDifficultySubmission.bind(this))
   }
 
   handleDifficultySubmission(event) {
@@ -74,19 +72,13 @@ class QuizApp extends HTMLElement {
   }
 
   showDifficultyForm() {
-    const nicknameForm = this.shadowRoot.querySelector('nickname-form')
-    const difficultyForm = this.shadowRoot.querySelector('difficulty-form')
-
-    nicknameForm.classList.add('hidden')
-    difficultyForm.classList.remove('hidden')
+    this.nicknameForm.classList.add('hidden')
+    this.difficultyForm.classList.remove('hidden')
   }
 
   showQuiz() {
-    const quizQuestion = this.shadowRoot.querySelector('quiz-question')
-    const countdownTimer = this.shadowRoot.querySelector('countdown-timer')
-
-    quizQuestion.classList.remove('hidden')
-    countdownTimer.classList.remove('hidden')
+    this.quizQuestion.classList.remove('hidden')
+    this.countdownTimer.classList.remove('hidden')
   }
 
   // to-do: quiz-question
@@ -102,6 +94,23 @@ class QuizApp extends HTMLElement {
   // stopTimer
   // endQuiz()
   // restartQuiz()
+
+  get nicknameForm() {
+    return this.shadowRoot.querySelector('nickname-form')
+  }
+
+  get difficultyForm() {
+    return this.shadowRoot.querySelector('difficulty-form')
+  }
+
+  get quizQuestion() {
+    return this.shadowRoot.querySelector('quiz-question')
+  }
+
+  /*get countdownTimer() {
+    return this.shadowRoot.querySelector('countdown-timer')
+  }*/
+
 }
 
 customElements.define('quiz-app', QuizApp)
