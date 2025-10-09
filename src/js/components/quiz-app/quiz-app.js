@@ -70,7 +70,7 @@ class QuizApp extends HTMLElement {
   }
 
   // to-do: quiz-question
-  // async getQuestion(): get question and display it inside quiz-question
+  // async getQuestion(): get question and display it inside quiz-question (retrieveEasyQuestion and retrieveMediumQuestion)
   // async handleAnswerSubmission(): retrieve answer, evaluate answer, handleCorrectAnswer() & handleWrongAnswer()
 
 
