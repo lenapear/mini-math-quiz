@@ -31,12 +31,19 @@ template.innerHTML = `
  * Custom Web Component for displaying and handling a quiz question.
  */
 class QuizQuestion extends HTMLElement {
-  constructor() {}
-  connectedCallback() {}
+  constructor() {
+    super()
+    this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
+  }
+
+  connectedCallback() {
+    this.attachEventListeners
+  }
   renderQuestion() {}
   // clear whatever was previously in answer-container
   // loop through each option for the question and dynamically add the radio buttons to the answer-container
   attachEventListeners() {}
+  // listen for submit > dispatch answer-submitted even with the answer
   implementKeyboardNavigation() {} // keyboard navigation for multiple choice questions (vertical)
 }
 
