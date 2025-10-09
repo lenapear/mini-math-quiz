@@ -44,7 +44,7 @@ class QuizQuestion extends HTMLElement {
   // loop through each option for the question and dynamically add the radio buttons to the answer-container
   attachEventListeners() {}
   // listen for submit > dispatch answer-submitted even with the answer
-  implementKeyboardNavigation() {} // keyboard navigation for multiple choice questions (vertical)
+  addKeyboardNavigation() {} // keyboard navigation for multiple choice questions (vertical)
 }
 
 customElements.define('quiz-question', QuizQuestion)
