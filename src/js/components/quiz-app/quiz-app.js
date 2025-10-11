@@ -90,11 +90,13 @@ class QuizApp extends HTMLElement {
     this.quizQuestion.addEventListener('answer-submitted', this.handleAnswerSubmission.bind(this))
   }
 
-  async handleAnswerSubmission() {} // should this be an async??
-  // retrieve user-answer
-  // evaluateAnswer()
+  async handleAnswerSubmission(event) {
+  // const userAnswer = event.detail.userAnswer
+  // const currentQuestion = this.questions[this.currentQuestionIndex]
+  // evaluateAnswer(currentQuestion, userAnswer)
   // handleCorrectAnswer() -> if correct answer, increase this.currentQuestionIndex++, displayQuestion of the next question
   // handleWrongAnswer () -> endQuiz()
+  }
 
   // display the current question
   async displayQuestion() {
