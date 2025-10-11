@@ -6,6 +6,7 @@
  */
 
 import { easyQuestions, mediumQuestions } from "../../questions"
+import { shuffle } from "../..shuffle.js"
 
 class QuizApp extends HTMLElement {
   /**
@@ -105,11 +106,11 @@ class QuizApp extends HTMLElement {
 
   prepareQuestions() {
     if (this.difficulty === "easy") {
-      // this.questions is a shuffled array of easyQuestions
+      this.questions = shuffle(easyQuestions)
     }
 
     if (this.difficulty === "medium") {
-      // this.questions is a shuffled array of mediumQuestions
+      this.questions = shuffle(mediumQuestions)
     }
   }
 
