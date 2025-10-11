@@ -5,6 +5,8 @@
  * @version 1.0.0
  */
 
+import { easyQuestions } from "../../questions"
+
 class QuizApp extends HTMLElement {
   /**
    * Creates an instance of QuizApp.
@@ -86,14 +88,35 @@ class QuizApp extends HTMLElement {
   async handleAnswerSubmission() {} // should this be an async??
   // retrieve answer
   // evaluateAnswer()
-  // handleCorrectAnswer() 
-  // handleWrongAnswer ()
+  // handleCorrectAnswer() -> if correct answer, getAndDisplay() next question ?? 
+  // handleWrongAnswer () -> endQuiz()
 
   async getAndDisplayQuestion() {
-  // retrieveEasyQuestion() and retrieveMediumQuestion()
-  // display the question inside quiz-question h2 element id="question-text"
+  if (this.difficulty === "easy") {
+    retrieveEasyQuestion()
+  }
+  
+  if (this.difficulty === "medium") {
+    retrieveMediumQuestion()
   }
 
+  // this.quizQuestion.renderQuestion(question)
+  // this.quizQuestion.renderAnswerContainer(arr)
+  }
+
+  retrieveEasyQuestion() {
+    return 
+  }
+
+  retrieveMediumQuestion() {
+    return
+  }
+
+  /**
+   * Rearrange the order of an array and 
+   */
+  getRandomQuestion(arr) {
+  }
 
   // add later:
   // stopTimer
@@ -111,11 +134,6 @@ class QuizApp extends HTMLElement {
   get quizQuestion() {
     return this.shadowRoot.querySelector('quiz-question')
   }
-
-  /*get countdownTimer() {
-    return this.shadowRoot.querySelector('countdown-timer')
-  }*/
-
 }
 
 customElements.define('quiz-app', QuizApp)

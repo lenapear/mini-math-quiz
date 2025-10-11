@@ -21,7 +21,8 @@ template.innerHTML = `
   <form>
     <h2 id="question-text"></h2>
     <div id="answer-container">
-      <!-- Radio options will be injected here dynamically -->
+      <label for="user-answer">Your answer:</label>
+      <input type="text" id="user-answer" autocomplete="off" required>
     </div>
     <button type="submit">Submit</button>
   </form>
@@ -39,12 +40,11 @@ class QuizQuestion extends HTMLElement {
   connectedCallback() {
     this.attachEventListeners
   }
-  renderQuestion() {}
-  // clear whatever was previously in answer-container
-  // loop through each option for the question and dynamically add the radio buttons to the answer-container
+  renderQuestion(question) {}
+  // clear whatever was previously in question-text
+  // set the question inside question-text
   attachEventListeners() {}
-  // listen for submit > dispatch answer-submitted even with the answer
-  addKeyboardNavigation() {} // keyboard navigation for multiple choice questions (vertical)
+  // listen for submit > dispatch answer-submitted even with the user-answer
 }
 
 customElements.define('quiz-question', QuizQuestion)
