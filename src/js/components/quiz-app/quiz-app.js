@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { easyQuestions } from "../../questions"
+import { easyQuestions, mediumQuestions } from "../../questions"
 
 class QuizApp extends HTMLElement {
   /**
@@ -16,6 +16,8 @@ class QuizApp extends HTMLElement {
     this.attachShadow({ mode: 'open' })
     this.nickname = ''
     this.difficulty = ''
+    this.questions = [] // the array of questions for the quiz game
+    this.currentQuestionIndex = 0
   }
 
   /**
@@ -75,47 +77,41 @@ class QuizApp extends HTMLElement {
 
   handleDifficultySubmission(event) {
     this.difficulty = event.detail.difficulty
-    this.showQuiz()
+    this.prepareQuestions()
+    this.startQuiz()
   }
 
-  showQuiz() {
+  startQuiz() {
     this.quizQuestion.classList.remove('hidden')
     this.countdownTimer.classList.remove('hidden')
+
+    // start the timer
+    // show the first question
+    // this.displayQuestion() // when currentQuestionIndex is 0
   }
+
 
   listenForAnswerSubmitted() {}
 
   async handleAnswerSubmission() {} // should this be an async??
-  // retrieve answer
+  // retrieve user-answer
   // evaluateAnswer()
-  // handleCorrectAnswer() -> if correct answer, getAndDisplay() next question ?? 
+  // handleCorrectAnswer() -> if correct answer, increase this.currentQuestionIndex++, displayQuestion of the next question
   // handleWrongAnswer () -> endQuiz()
 
-  async getAndDisplayQuestion() {
-  if (this.difficulty === "easy") {
-    retrieveEasyQuestion()
-  }
-  
-  if (this.difficulty === "medium") {
-    retrieveMediumQuestion()
+  // display the current question
+  async displayQuestion() {
+    this.quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
   }
 
-  // this.quizQuestion.renderQuestion(question)
-  // this.quizQuestion.renderAnswerContainer(arr)
-  }
+  prepareQuestions() {
+    if (this.difficulty === "easy") {
+      // this.questions is a shuffled array of easyQuestions
+    }
 
-  retrieveEasyQuestion() {
-    return 
-  }
-
-  retrieveMediumQuestion() {
-    return
-  }
-
-  /**
-   * Rearrange the order of an array and 
-   */
-  getRandomQuestion(arr) {
+    if (this.difficulty === "medium") {
+      // this.questions is a shuffled array of mediumQuestions
+    }
   }
 
   // add later:
