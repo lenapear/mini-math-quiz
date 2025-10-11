@@ -48,13 +48,8 @@ class QuizApp extends HTMLElement {
    */
   attachEventListeners() {
     this.listenForNicknameSubmitted()
-
     this.listenForDifficultySubmitted()
-
-    // to-do: quiz-question
-    // listen for answer-submitted
-    // handleAnswerSubmission
-
+    this.listenForAnswerSubmitted()
   }
 
   listenForNicknameSubmitted() {
@@ -91,7 +86,9 @@ class QuizApp extends HTMLElement {
   }
 
 
-  listenForAnswerSubmitted() {}
+  listenForAnswerSubmitted() {
+    this.quizQuestion.addEventListener('answer-submitted', this.handleAnswerSubmission.bind(this))
+  }
 
   async handleAnswerSubmission() {} // should this be an async??
   // retrieve user-answer
