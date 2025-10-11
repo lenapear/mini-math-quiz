@@ -16,6 +16,10 @@ template.innerHTML = `
         padding: 20px;
         gap: 10px;
       }
+      
+      h2 {
+      text-align: center;
+      }
   </style>
 
   <form>
@@ -38,13 +42,39 @@ class QuizQuestion extends HTMLElement {
   }
 
   connectedCallback() {
-    this.attachEventListeners
+    this.form = this.shadowRoot.querySelector('form')
+    this.form.addEventListener('submit', this.handleSubmit.bind(this))
+    this.clearInputfield
   }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const userAnswer = this.getUserAnswer()
+    this.dispatchAnswerEvent(userAnswer)
+    this.clearInputfield()
+  }
+
+  
+  getUserAnswer() {
+    return this.shadowRoot.querySelector('#user-answer').value.trim()
+  }
+
+  dispatchAnswerEvent(userAnswer) {
+    this.dispatchEvent(new CustomEvent('answer-submitted', {
+      detail: { userAnswer },
+      bubbles: true,
+      composed: true
+    }))
+  }
+
+  clearInputfield () {
+    this.shadowRoot.querySelector('#user-answer').value = ''
+  }
+
   renderQuestion(question) {}
   // clear whatever was previously in question-text
   // set the question inside question-text
-  attachEventListeners() {}
-  // listen for submit > dispatch answer-submitted even with the user-answer
+
 }
 
 customElements.define('quiz-question', QuizQuestion)

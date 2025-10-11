@@ -59,7 +59,9 @@ class NicknameForm extends HTMLElement {
 
   dispatchNicknameEvent(nickname) {
     this.dispatchEvent(new CustomEvent('nickname-submitted', {
-      detail: { nickname }
+      detail: { nickname },
+      bubbles: true,
+      composed: true
     }))
   }
 }

@@ -73,8 +73,9 @@ class DifficultyForm extends HTMLElement {
 
   dispatchDifficultyEvent(difficulty) {
     this.dispatchEvent(new CustomEvent('difficulty-submitted', {
-      detail: { difficulty }
-      // bubbles?? composed??
+      detail: { difficulty },
+      bubbles: true,
+      composed: true    
     }))
   }
 }
