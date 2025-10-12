@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { easyQuestions, mediumQuestions } from "../../questions"
+import { easyQuestions, mediumQuestions } from "../../questions.js"
 import { shuffle } from "../../shuffle.js"
 import { Calculator } from "../../calculator-module/Calculator.js"
 
@@ -82,7 +82,8 @@ class QuizApp extends HTMLElement {
 
   startQuiz() {
     this.quizQuestion.classList.remove('hidden')
-    this.countdownTimer.classList.remove('hidden')
+    this.difficultyForm.classList.add('hidden')
+    // this.countdownTimer.classList.remove('hidden')
 
     // start the timer (will implement the timer after quiz-question is done)
     // show the first question
@@ -120,6 +121,7 @@ class QuizApp extends HTMLElement {
 
   displayQuestion() {
     this.quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
+    console.log('Rendering:', this.questions[this.currentQuestionIndex]) // ❗️ debugger
   }
 
   prepareQuestions() {
