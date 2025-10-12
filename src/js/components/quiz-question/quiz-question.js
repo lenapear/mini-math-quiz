@@ -51,7 +51,7 @@ class QuizQuestion extends HTMLElement {
     event.preventDefault()
     const userAnswer = this.getUserAnswer()
     this.dispatchAnswerEvent(userAnswer)
-    this.clearInputfield()
+    this.clearInputField()
   }
 
   
@@ -67,14 +67,23 @@ class QuizQuestion extends HTMLElement {
     }))
   }
 
-  clearInputfield () {
+
+  renderQuestion(question) {
+    this.clearQuestion()
+    this.questionText.textContent = question
+  }
+
+  clearQuestion() {
+    this.questionText.textContent = ''
+  }
+
+  clearInputField () {
     this.shadowRoot.querySelector('#user-answer').value = ''
   }
 
-  renderQuestion(question) {}
-  // clear whatever was previously in question-text
-  // set the question inside question-text
-
+  get questionText () {
+    return this.shadowRoot.querySelector('#question-text')
+  }
 }
 
 customElements.define('quiz-question', QuizQuestion)

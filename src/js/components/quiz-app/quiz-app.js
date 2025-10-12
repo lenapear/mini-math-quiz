@@ -99,7 +99,6 @@ class QuizApp extends HTMLElement {
   // handleWrongAnswer () -> endQuiz()
   }
 
-  // display the current question
   async displayQuestion() {
     this.quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
   }
