@@ -171,12 +171,14 @@ class QuizApp extends HTMLElement {
       this.score++
       this.currentQuestionIndex++
       if (this.#checkIfQuizEnded()) {
-        this.#endQuiz()
+        // this.#endQuiz()
+        console.log("Game Over")
         return
       }
       this.#displayQuestion()
     } else {
-      this.#endQuiz()
+      //this.#endQuiz()
+      console.log("Game Over")
     }
   }
 
