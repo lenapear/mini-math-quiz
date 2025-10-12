@@ -97,7 +97,6 @@ class QuizApp extends HTMLElement {
     this.#showDifficultyForm()
   }
 
-
   /**
    * Displays the difficulty selection form and hides the nickname form.
    * @private
@@ -145,7 +144,7 @@ class QuizApp extends HTMLElement {
   }
 
 
-    /**
+  /**
    * Adds listener for answer submission.
    * @private
    * @returns {void}
@@ -204,7 +203,7 @@ class QuizApp extends HTMLElement {
     console.log('Rendering:', this.questions[this.currentQuestionIndex]) // ❗️ debugger
   }
 
-    /**
+  /**
    * Prepares and shuffles questions based on selected difficulty.
    * @private
    * @returns {void}
