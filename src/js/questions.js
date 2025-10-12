@@ -1,4 +1,16 @@
-// Arrays of questions, Easy and Medium level ones. Will have a hardQuestions array in the future.
+/**
+ * @fileoverview Contains question arrays for the quiz game.
+ * Each array represents a difficulty level and contains string-based math expressions
+ * compatible with the Calculator module.
+ *
+ * @module questions
+ * @version 1.0.0
+ */
+
+/**
+ * Easy-level math questions.
+ * @type {string[]}
+ */
 export const easyQuestions = [
   "3+5", "9-4", "2*6", "8/2", "4+7",
   "5*3", "12-5", "10/2", "6+8", "15-7",
@@ -12,6 +24,10 @@ export const easyQuestions = [
   "9-3", "16/8", "3+12", "14-9", "10-6"
 ]
 
+/**
+ * Medium-level math questions.
+ * @type {string[]}
+ */
 export const mediumQuestions = [
   "5+8-3", "12*2-5", "20/4+6", "9+7*2", "15-6+8",
   "25/5+3", "18-4*2", "7*5-10", "30/3+4", "11+9-5",
@@ -24,3 +40,11 @@ export const mediumQuestions = [
   "28/4+9", "15*2-7", "12+14-8", "9*4-15", "18+6/3",
   "20-8+10", "25/5+12", "17*2-9", "22-6+5", "13+11-7"
 ]
+
+/**
+ * Placeholder for hard-level questions.
+ * To be implemented when the Calculator module supports parentheses.
+ * @type {string[]}
+ * @todo Add advanced expressions using parentheses and order of operations.
+ */
+// export const hardQuestions = []

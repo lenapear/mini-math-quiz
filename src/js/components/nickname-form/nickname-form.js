@@ -1,11 +1,13 @@
 /**
- * The nickname-form web component module.
+ * @fileoverview Defines the <nickname-form> web component,
+ * which handles nickname input and emits a custom event when submitted.
  *
- * @author Lena Le <ll224ve@student.lnu.se>
+ * @module components/nickname-form
+ * @author Lena Le
  * @version 1.0.0
  */
 
-// Define the template for nickname form
+// Define the template for nickname form.
 const template = document.createElement('template')
 template.innerHTML = `
   <style>
@@ -26,11 +28,13 @@ template.innerHTML = `
 `
 
 /**
- * Custom Web Component for handling a nickname input.
+ * Custom Web Component responsible for collecting a nickname
+ * and dispatching a "nickname-submitted" event.
+ * @extends HTMLElement
  */
 class NicknameForm extends HTMLElement {
   /**
-   * Creates an instance of NicknameForm.
+   * Creates an instance of NicknameForm and attaches a shadow DOM.
    */
   constructor () {
     super()
@@ -39,25 +43,41 @@ class NicknameForm extends HTMLElement {
 
   /**
    * Lifecycle method called when the component is added to the DOM.
-   * Adds an event listener to handle form submission.
+   * Adds an event listener for form submission.
    */
   connectedCallback () {
     this.form = this.shadowRoot.querySelector('form')
-    this.form.addEventListener('submit', this.handleSubmit.bind(this))
+    this.form.addEventListener('submit', this.#handleSubmit.bind(this))
   }
 
-  handleSubmit(event) {
+    /**
+   * Handles form submission and dispatches the nickname event.
+   * @private
+   * @param {SubmitEvent} event - The submit event object.
+   * @returns {void}
+   */
+  #handleSubmit(event) {
     event.preventDefault()
-    const nickname = this.getNickname()
-    this.dispatchNicknameEvent(nickname)
+    const nickname = this.#getNickname()
+    this.#dispatchNicknameEvent(nickname)
   }
 
-  
-  getNickname() {
+  /**
+   * Retrieves the nickname from the input field.
+   * @private
+   * @returns {string} The trimmed nickname value.
+   */
+  #getNickname() {
     return this.shadowRoot.querySelector('#nickname').value.trim()
   }
 
-  dispatchNicknameEvent(nickname) {
+  /**
+   * Dispatches a custom event containing the nickname.
+   * @private
+   * @param {string} nickname - The nickname to include in the event detail.
+   * @returns {void}
+   */
+  #dispatchNicknameEvent(nickname) {
     this.dispatchEvent(new CustomEvent('nickname-submitted', {
       detail: { nickname },
       bubbles: true,
