@@ -1,5 +1,5 @@
 /**
- * The quiz-application web component module.
+ * The quiz-app web component module.
  *
  * @author Lena Le <ll224ve@student.lnu.se>
  * @version 1.0.0
@@ -136,9 +136,13 @@ class QuizApp extends HTMLElement {
     return this.currentQuestionIndex >= this.questions.length
   }
 
+  // endQuiz()
+  // hide quiz elements
+  // show high-score
+  // if success -> updateHighScore
+
   // add later:
   // stopTimer
-  // endQuiz()
   // restartQuiz()
 
   get nicknameForm() {
