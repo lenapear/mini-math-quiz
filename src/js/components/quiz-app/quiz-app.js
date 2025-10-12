@@ -103,6 +103,10 @@ class QuizApp extends HTMLElement {
     if (isCorrect) {
       this.score++
       this.currentQuestionIndex++
+      if (this.checkIfQuizEnded()) {
+        this.endQuiz()
+        return
+      }
       this.displayQuestion()
     } else {
       this.endQuiz()
@@ -111,10 +115,7 @@ class QuizApp extends HTMLElement {
 
   evaluateAnswer(question, answer) {
     const correct = this.calculator.calculate(question)
-    if (correct === Number(answer)) {
-      return true
-    }
-    return false
+    return correct === Number(answer)
   }
 
   displayQuestion() {
@@ -127,6 +128,10 @@ class QuizApp extends HTMLElement {
     } else if (this.difficulty === "medium") {
       this.questions = shuffle(mediumQuestions)
       }
+  }
+
+  checkIfQuizEnded() {
+    return this.currentQuestionIndex >= this.questions.length
   }
 
   // add later:
