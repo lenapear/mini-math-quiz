@@ -6,7 +6,8 @@
  */
 
 import { easyQuestions, mediumQuestions } from "../../questions"
-import { shuffle } from "../..shuffle.js"
+import { shuffle } from "../../shuffle.js"
+import { Calculator } from "../../calculator-module/Calculator.js"
 
 class QuizApp extends HTMLElement {
   /**
@@ -15,10 +16,12 @@ class QuizApp extends HTMLElement {
   constructor() {
     super()
     this.attachShadow({ mode: 'open' })
+    this.score = 0
     this.nickname = ''
     this.difficulty = ''
-    this.questions = [] // the array of questions for the quiz game
+    this.questions = []
     this.currentQuestionIndex = 0
+    this.calculator = new Calculator()
   }
 
   /**
@@ -81,9 +84,9 @@ class QuizApp extends HTMLElement {
     this.quizQuestion.classList.remove('hidden')
     this.countdownTimer.classList.remove('hidden')
 
-    // start the timer
+    // start the timer (will implement the timer after quiz-question is done)
     // show the first question
-    // this.displayQuestion() // when currentQuestionIndex is 0
+    this.displayQuestion() // when currentQuestionIndex is 0
   }
 
 
@@ -92,25 +95,38 @@ class QuizApp extends HTMLElement {
   }
 
   async handleAnswerSubmission(event) {
-  // const userAnswer = event.detail.userAnswer
-  // const currentQuestion = this.questions[this.currentQuestionIndex]
-  // evaluateAnswer(currentQuestion, userAnswer)
-  // handleCorrectAnswer() -> if correct answer, increase this.currentQuestionIndex++, displayQuestion of the next question
-  // handleWrongAnswer () -> endQuiz()
+    const userAnswer = event.detail.userAnswer
+    const currentQuestion = this.questions[this.currentQuestionIndex]
+    
+    const isCorrect = this.evaluateAnswer(currentQuestion, userAnswer)
+
+    if (isCorrect) {
+      this.score++
+      this.currentQuestionIndex++
+      this.displayQuestion()
+    } else {
+      this.endQuiz()
+    }
   }
 
-  async displayQuestion() {
+  evaluateAnswer(question, answer) {
+    const correct = this.calculator.calculate(question)
+    if (correct === Number(answer)) {
+      return true
+    }
+    return false
+  }
+
+  displayQuestion() {
     this.quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
   }
 
   prepareQuestions() {
     if (this.difficulty === "easy") {
       this.questions = shuffle(easyQuestions)
-    }
-
-    if (this.difficulty === "medium") {
+    } else if (this.difficulty === "medium") {
       this.questions = shuffle(mediumQuestions)
-    }
+      }
   }
 
   // add later:
