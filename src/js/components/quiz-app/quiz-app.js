@@ -75,6 +75,7 @@ class QuizApp extends HTMLElement {
     this.#listenForNicknameSubmitted()
     this.#listenForDifficultySubmitted()
     this.#listenForAnswerSubmitted()
+    // this.#listenForTimeUp()
   }
 
   /**
@@ -138,7 +139,7 @@ class QuizApp extends HTMLElement {
     this.difficultyForm.classList.add('hidden')
     // this.countdownTimer.classList.remove('hidden')
 
-    // Start the timer (to be implemented)
+    // Start the timer: this.countdownTimer.startTimer()
     // Display the first question
     this.#displayQuestion() // when currentQuestionIndex is 0
   }
@@ -225,13 +226,16 @@ class QuizApp extends HTMLElement {
     return this.currentQuestionIndex >= this.questions.length
   }
 
+  // #listenForTimeUp
+  // handleTimeUp - > this.#endQuiz
+
   // #endQuiz()
   // hide quiz elements
   // show high-score
   // if success -> updateHighScore
 
   // add later:
-  // stopTimer
+
   // restartQuiz()
 
   // --- Element getters ---
