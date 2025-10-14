@@ -175,14 +175,14 @@ class QuizApp extends HTMLElement {
       this.score++
       this.currentQuestionIndex++
       if (this.#hasQuizEnded()) {
-        // this.#endQuiz()
-        console.log("Game Over")
+        this.#endQuiz()
+        console.log("Game Over") // ❗️ debugger
         return
       }
       this.#displayQuestion()
     } else {
-      //this.#endQuiz()
-      console.log("Game Over")
+      this.#endQuiz()
+      console.log("Game Over") // ❗️ debugger
     }
   }
 
@@ -243,18 +243,24 @@ class QuizApp extends HTMLElement {
    * Handles the event "time-up" and ends the quiz.
    */
   #handleTimeUp() {
-    // this.#endQuiz()
-    console.log("Game Over")
+    this.#endQuiz()
+    console.log("Game Over") // ❗️ debugger
   }
 
-  // #endQuiz()
-  // hide quiz elements
+  #endQuiz() {
+    this.#countdownTimer.stopTimer()
+    this.#hideQuizElements()
   // show high-score
   // if success -> updateHighScore
-
+  }
   // add later:
 
   // restartQuiz()
+
+  #hideQuizElements() {
+    this.#quizQuestion.classList.add('hidden')
+    this.#countdownTimer.add('hidden')
+  }
 
   // --- Element getters ---
 
