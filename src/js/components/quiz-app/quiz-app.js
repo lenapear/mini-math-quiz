@@ -80,7 +80,7 @@ class QuizApp extends HTMLElement {
     this.#listenForNicknameSubmitted()
     this.#listenForDifficultySubmitted()
     this.#listenForAnswerSubmitted()
-    // this.#listenForTimeUp()
+    this.#listenForTimeUp()
   }
 
   /**
@@ -89,7 +89,7 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #listenForNicknameSubmitted() {
-    this.nicknameForm.addEventListener('nickname-submitted', this.#handleNicknameSubmission.bind(this))
+    this.#nicknameForm.addEventListener('nickname-submitted', this.#handleNicknameSubmission.bind(this))
   }
 
   /**
@@ -109,8 +109,8 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #showDifficultyForm() {
-    this.nicknameForm.classList.add('hidden')
-    this.difficultyForm.classList.remove('hidden')
+    this.#nicknameForm.classList.add('hidden')
+    this.#difficultyForm.classList.remove('hidden')
   }
 
   /**
@@ -119,7 +119,7 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #listenForDifficultySubmitted() {
-    this.difficultyForm.addEventListener('difficulty-submitted', this.#handleDifficultySubmission.bind(this))
+    this.#difficultyForm.addEventListener('difficulty-submitted', this.#handleDifficultySubmission.bind(this))
   }
 
   /**
@@ -140,12 +140,11 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #startQuiz() {
-    this.quizQuestion.classList.remove('hidden')
-    this.difficultyForm.classList.add('hidden')
-    // this.countdownTimer.classList.remove('hidden')
+    this.#quizQuestion.classList.remove('hidden')
+    this.#difficultyForm.classList.add('hidden')
+    this.#countdownTimer.classList.remove('hidden')
 
-    // Start the timer: this.countdownTimer.startTimer()
-    // Display the first question
+    this.#countdownTimer.startTimer()
     this.#displayQuestion() // when currentQuestionIndex is 0
   }
 
@@ -156,7 +155,7 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #listenForAnswerSubmitted() {
-    this.quizQuestion.addEventListener('answer-submitted', this.#handleAnswerSubmission.bind(this))
+    this.#quizQuestion.addEventListener('answer-submitted', this.#handleAnswerSubmission.bind(this))
   }
 
   /**
@@ -175,7 +174,7 @@ class QuizApp extends HTMLElement {
     if (isCorrect) {
       this.score++
       this.currentQuestionIndex++
-      if (this.#checkIfQuizEnded()) {
+      if (this.#hasQuizEnded()) {
         // this.#endQuiz()
         console.log("Game Over")
         return
@@ -205,7 +204,7 @@ class QuizApp extends HTMLElement {
    * @returns {void}
    */
   #displayQuestion() {
-    this.quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
+    this.#quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
     console.log('Rendering:', this.questions[this.currentQuestionIndex]) // ❗️ debugger
   }
 
@@ -227,12 +226,26 @@ class QuizApp extends HTMLElement {
    * @private
    * @returns {boolean} True if there are no remaining questions, false otherwise.
    */
-  #checkIfQuizEnded() {
+  #hasQuizEnded() {
     return this.currentQuestionIndex >= this.questions.length
   }
 
-  // #listenForTimeUp
-  // handleTimeUp - > this.#endQuiz
+  /**
+   * Adds listener for time-up event.
+   * @private
+   * @returns {void}
+   */
+  #listenForTimeUp() {
+    this.#countdownTimer.addEventListener('time-up', this.#handleTimeUp.bind(this))
+  }
+
+  /**
+   * Handles the event "time-up" and ends the quiz.
+   */
+  #handleTimeUp() {
+    // this.#endQuiz()
+    console.log("Game Over")
+  }
 
   // #endQuiz()
   // hide quiz elements
@@ -250,7 +263,7 @@ class QuizApp extends HTMLElement {
    * @private
    * @returns {HTMLElement}
    */
-  get nicknameForm() {
+  get #nicknameForm() {
     return this.shadowRoot.querySelector('nickname-form')
   }
 
@@ -259,7 +272,7 @@ class QuizApp extends HTMLElement {
    * @private
    * @returns {HTMLElement}
    */
-  get difficultyForm() {
+  get #difficultyForm() {
     return this.shadowRoot.querySelector('difficulty-form')
   }
 
@@ -268,8 +281,17 @@ class QuizApp extends HTMLElement {
    * @private
    * @returns {HTMLElement}
    */
-  get quizQuestion() {
+  get #quizQuestion() {
     return this.shadowRoot.querySelector('quiz-question')
+  }
+
+  /**
+   * Gets the countdown-timer element.
+   * @private
+   * @returns {HTMLElement}
+   */
+  get #countdownTimer() {
+    return this.shadowRoot.querySelector('countdown-timer')
   }
 }
 
