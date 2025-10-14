@@ -30,14 +30,19 @@ class QuizApp extends HTMLElement {
     this.attachShadow({ mode: 'open' })
     /** @type {number} */
     this.score = 0
+
     /** @type {string} */
     this.nickname = ''
+  
     /** @type {string} */
     this.difficulty = ''
+
     /** @type {string[]} */
     this.questions = []
+
     /** @type {number} */
     this.currentQuestionIndex = 0
+
     /** @type {Calculator} */
     this.calculator = new Calculator()
   }
