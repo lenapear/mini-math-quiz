@@ -248,6 +248,7 @@ class QuizApp extends HTMLElement {
     this.#countdownTimer.stopTimer()
     this.#hideQuizElements()
     this.#showHighScore()
+    this.#showResultMessage()
     
     if (success) {
       this.#highScore.updateScores({
@@ -268,6 +269,16 @@ class QuizApp extends HTMLElement {
 
   #showHighScore() {
     this.#highScore.classList.remove('hidden')
+  }
+
+  #showResultMessage(success) {
+    const message = document.createElement('p')
+    message.textContent = success
+    ? `✅ Correct! Final score: ${this.score}`
+    : `❌ Wrong answer! Final score: ${this.score}`
+
+    this.shadowRoot.appendChild(message)
+    setTimeout(() => message.remove(), 5000)
   }
 
   // --- Element getters ---

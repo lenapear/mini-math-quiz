@@ -61,6 +61,7 @@ class HighScore extends HTMLElement {
    * @returns {void}
    */
   loadScores(difficulty) {
+    console.log('Loading scores for:', difficulty) // 🚩
     const key = `highScores-${difficulty}`
     const scores = JSON.parse(localStorage.getItem(key)) || []
     this.#renderScores(scores)
@@ -89,6 +90,7 @@ class HighScore extends HTMLElement {
    */
   #renderScores(scores) {
     this.#clearScoreList()
+    console.log('Rendering', scores) // 🚩
 
     scores.forEach((entry, index) => {
       const row = document.createElement('tr')
