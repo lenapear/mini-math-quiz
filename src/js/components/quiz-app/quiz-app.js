@@ -175,14 +175,12 @@ class QuizApp extends HTMLElement {
       this.score++
       this.currentQuestionIndex++
       if (this.#hasQuizEnded()) {
-        this.#endQuiz()
-        console.log("Game Over") // ❗️ debugger
+        this.#endQuiz(true)
         return
       }
       this.#displayQuestion()
     } else {
       this.#endQuiz()
-      console.log("Game Over") // ❗️ debugger
     }
   }
 
@@ -243,23 +241,33 @@ class QuizApp extends HTMLElement {
    * Handles the event "time-up" and ends the quiz.
    */
   #handleTimeUp() {
-    this.#endQuiz()
-    console.log("Game Over") // ❗️ debugger
+    this.#endQuiz(true)
   }
 
-  #endQuiz() {
+  #endQuiz(success = false) {
     this.#countdownTimer.stopTimer()
     this.#hideQuizElements()
-  // show high-score
-  // if success -> updateScore
-  // loadScore again
+    this.#showHighScore()
+    
+    if (success) {
+      this.#highScore.updateScores({
+        nickname: this.nickname,
+        score: this.score,
+        difficulty: this.difficulty
+      })
+    }
+    this.#highScore.loadScores(this.difficulty)
   }
 
   // restartQuiz()
 
   #hideQuizElements() {
     this.#quizQuestion.classList.add('hidden')
-    this.#countdownTimer.add('hidden')
+    this.#countdownTimer.classList.add('hidden')
+  }
+
+  #showHighScore() {
+    this.#highScore.classList.remove('hidden')
   }
 
   // --- Element getters ---
@@ -298,6 +306,10 @@ class QuizApp extends HTMLElement {
    */
   get #countdownTimer() {
     return this.shadowRoot.querySelector('countdown-timer')
+  }
+
+  get #highScore() {
+    return this.shadowRoot.querySelector('high-score')
   }
 }
 
