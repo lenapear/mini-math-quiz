@@ -251,9 +251,9 @@ class QuizApp extends HTMLElement {
     this.#countdownTimer.stopTimer()
     this.#hideQuizElements()
   // show high-score
-  // if success -> updateHighScore
+  // if success -> updateScore
+  // loadScore again
   }
-  // add later:
 
   // restartQuiz()
 
