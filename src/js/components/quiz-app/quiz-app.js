@@ -268,14 +268,25 @@ class QuizApp extends HTMLElement {
     restartButton.id = 'restart-button'
     restartButton.textContent = 'Restart Quiz!'
 
-    restartButton.addEventListener('click', () => {
-      document.querySelector('quiz-app')?.restartQuiz()
-    })
+    restartButton.addEventListener('click', () => this.#restartQuiz())
 
     this.shadowRoot.appendChild(restartButton)
   }
 
-  // #restartQuiz()
+  #restartQuiz() {
+    // Reset values
+    this.score = 0
+    this.currentQuestionIndex = 0
+
+    // Hide the high score view
+    this.#highScore.classList.add('hidden')
+
+    // Remove restart button
+    this.shadowRoot.querySelector('#restart-button')?.remove()
+
+    // Restart the flow
+    this.#nicknameForm.classList.remove('hidden')
+  }
 
   #hideQuizElements() {
     this.#quizQuestion.classList.add('hidden')
