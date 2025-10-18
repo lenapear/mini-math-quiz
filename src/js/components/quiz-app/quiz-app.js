@@ -258,9 +258,24 @@ class QuizApp extends HTMLElement {
       })
     }
     this.#highScore.loadScores(this.difficulty)
+    this.#createRestartButton()
   }
 
-  // restartQuiz()
+  #createRestartButton() {
+    if (this.shadowRoot.querySelector('#restart-button')) return
+
+    const restartButton = document.createElement('button')
+    restartButton.id = 'restart-button'
+    restartButton.textContent = 'Restart Quiz!'
+
+    restartButton.addEventListener('click', () => {
+      document.querySelector('quiz-app')?.restartQuiz()
+    })
+
+    this.shadowRoot.appendChild(restartButton)
+  }
+
+  // #restartQuiz()
 
   #hideQuizElements() {
     this.#quizQuestion.classList.add('hidden')
