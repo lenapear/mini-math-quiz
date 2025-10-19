@@ -93,6 +93,35 @@ class QuizApp extends HTMLElement {
   }
 
   /**
+   * Adds listener for difficulty submission.
+   * @private
+   * @returns {void}
+   */
+  #listenForDifficultySubmitted() {
+    this.#difficultyForm.addEventListener('difficulty-submitted', this.#handleDifficultySubmission.bind(this))
+  }
+
+  /**
+   * Adds listener for answer submission.
+   * @private
+   * @returns {void}
+   */
+  #listenForAnswerSubmitted() {
+    this.#quizQuestion.addEventListener('answer-submitted', this.#handleAnswerSubmission.bind(this))
+  }
+
+  /**
+   * Adds listener for time-up event.
+   * @private
+   * @returns {void}
+   */
+  #listenForTimeUp() {
+    this.#countdownTimer.addEventListener('time-up', this.#handleTimeUp.bind(this))
+  }
+
+  // --- Event Handlers ---
+
+  /**
    * Handles nickname submission and shows the difficulty form.
    * @private
    * @param {CustomEvent<{nickname: string}>} event - Custom event containing nickname detail.
@@ -101,25 +130,6 @@ class QuizApp extends HTMLElement {
   #handleNicknameSubmission(event) {
     this.nickname = event.detail.nickname
     this.#showDifficultyForm()
-  }
-
-  /**
-   * Displays the difficulty selection form and hides the nickname form.
-   * @private
-   * @returns {void}
-   */
-  #showDifficultyForm() {
-    this.#nicknameForm.classList.add('hidden')
-    this.#difficultyForm.classList.remove('hidden')
-  }
-
-  /**
-   * Adds listener for difficulty submission.
-   * @private
-   * @returns {void}
-   */
-  #listenForDifficultySubmitted() {
-    this.#difficultyForm.addEventListener('difficulty-submitted', this.#handleDifficultySubmission.bind(this))
   }
 
   /**
@@ -132,30 +142,6 @@ class QuizApp extends HTMLElement {
     this.difficulty = event.detail.difficulty
     this.#prepareQuestions()
     this.#startQuiz()
-  }
-
-  /**
-   * Starts the quiz: shows the first question and initializes the timer.
-   * @private
-   * @returns {void}
-   */
-  #startQuiz() {
-    this.#quizQuestion.classList.remove('hidden')
-    this.#difficultyForm.classList.add('hidden')
-    this.#countdownTimer.classList.remove('hidden')
-
-    this.#countdownTimer.startTimer()
-    this.#displayQuestion() // when currentQuestionIndex is 0
-  }
-
-
-  /**
-   * Adds listener for answer submission.
-   * @private
-   * @returns {void}
-   */
-  #listenForAnswerSubmitted() {
-    this.#quizQuestion.addEventListener('answer-submitted', this.#handleAnswerSubmission.bind(this))
   }
 
   /**
@@ -185,25 +171,26 @@ class QuizApp extends HTMLElement {
   }
 
   /**
-   * Evaluates the user's answer by comparing it to the correct result from the Calculator.
-   * @private
-   * @param {string} question - The question expression.
-   * @param {string} answer - The user's answer as a string.
-   * @returns {boolean} True if the answer is correct, false otherwise.
+   * Handles the event "time-up" and ends the quiz.
    */
-  #evaluateAnswer(question, answer) {
-    const correct = this.calculator.calculate(question)
-    return correct === Number(answer)
+  #handleTimeUp() {
+    this.#endQuiz(true)
   }
 
+  // --- Game Flow methods ---
+
   /**
-   * Displays the current question in the quiz-question component.
+   * Starts the quiz: shows the first question and initializes the timer.
    * @private
    * @returns {void}
    */
-  #displayQuestion() {
-    this.#quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
-    console.log('Rendering:', this.questions[this.currentQuestionIndex]) // ❗️ debugger
+  #startQuiz() {
+    this.#quizQuestion.classList.remove('hidden')
+    this.#difficultyForm.classList.add('hidden')
+    this.#countdownTimer.classList.remove('hidden')
+
+    this.#countdownTimer.startTimer()
+    this.#displayQuestion() // when currentQuestionIndex is 0
   }
 
   /**
@@ -220,6 +207,28 @@ class QuizApp extends HTMLElement {
   }
 
   /**
+   * Displays the current question in the quiz-question component.
+   * @private
+   * @returns {void}
+   */
+  #displayQuestion() {
+    this.#quizQuestion.renderQuestion(this.questions[this.currentQuestionIndex])
+    console.log('Rendering:', this.questions[this.currentQuestionIndex]) // ❗️ debugger
+  }
+
+  /**
+   * Evaluates the user's answer by comparing it to the correct result from the Calculator.
+   * @private
+   * @param {string} question - The question expression.
+   * @param {string} answer - The user's answer as a string.
+   * @returns {boolean} True if the answer is correct, false otherwise.
+   */
+  #evaluateAnswer(question, answer) {
+    const correct = this.calculator.calculate(question)
+    return correct === Number(answer)
+  }
+
+  /**
    * Checks whether the quiz has reached its end.
    * @private
    * @returns {boolean} True if there are no remaining questions, false otherwise.
@@ -229,38 +238,84 @@ class QuizApp extends HTMLElement {
   }
 
   /**
-   * Adds listener for time-up event.
+   * Ends the quiz, stops the timer, hides quiz elements, and shows the result and high-score view.
+   * Updates the high score if the player finished successfully.
+   * @private
+   * @param {boolean} [success=false] - Whether the player completed the quiz successfully.
+   * @returns {void}
+   */
+  #endQuiz(success = false) {
+  this.#countdownTimer.stopTimer()
+  this.#hideQuizElements()
+  this.#showHighScore()
+  this.#showResultMessage()
+  
+  if (success) {
+    this.#highScore.updateScores({
+      nickname: this.nickname,
+      score: this.score,
+      difficulty: this.difficulty
+    })
+  }
+  this.#highScore.loadScores(this.difficulty)
+  this.#createRestartButton()
+  }
+
+  // --- Utility / UI methods ---
+
+  /**
+   * Displays the difficulty selection form and hides the nickname form.
    * @private
    * @returns {void}
    */
-  #listenForTimeUp() {
-    this.#countdownTimer.addEventListener('time-up', this.#handleTimeUp.bind(this))
+  #showDifficultyForm() {
+    this.#nicknameForm.classList.add('hidden')
+    this.#difficultyForm.classList.remove('hidden')
   }
 
   /**
-   * Handles the event "time-up" and ends the quiz.
+   * Hides the quiz question and timer elements after the game ends.
+   * @private
+   * @returns {void}
    */
-  #handleTimeUp() {
-    this.#endQuiz(true)
+  #hideQuizElements() {
+    this.#quizQuestion.classList.add('hidden')
+    this.#countdownTimer.classList.add('hidden')
   }
 
-  #endQuiz(success = false) {
-    this.#countdownTimer.stopTimer()
-    this.#hideQuizElements()
-    this.#showHighScore()
-    this.#showResultMessage()
-    
-    if (success) {
-      this.#highScore.updateScores({
-        nickname: this.nickname,
-        score: this.score,
-        difficulty: this.difficulty
-      })
-    }
-    this.#highScore.loadScores(this.difficulty)
-    this.#createRestartButton()
+  /**
+   * Shows the high-score component after the quiz ends.
+   * @private
+   * @returns {void}
+   */
+  #showHighScore() {
+    this.#highScore.classList.remove('hidden')
   }
 
+
+  /**
+   * Displays a short message indicating whether the player succeeded or failed,
+   * including the final score. The message disappears automatically after 5 seconds.
+   * @private
+   * @param {boolean} success - Whether the player completed the quiz successfully.
+   * @returns {void}
+   */
+  #showResultMessage(success) {
+    const message = document.createElement('p')
+    message.textContent = success
+    ? `✅ Correct! Final score: ${this.score}`
+    : `❌ Wrong answer! Final score: ${this.score}`
+
+    this.shadowRoot.appendChild(message)
+    setTimeout(() => message.remove(), 5000)
+  }
+
+  /**
+   * Creates a restart button that allows the player to start a new quiz.
+   * If the button already exists, no duplicate is created.
+   * @private
+   * @returns {void}
+   */
   #createRestartButton() {
     if (this.shadowRoot.querySelector('#restart-button')) return
 
@@ -273,38 +328,18 @@ class QuizApp extends HTMLElement {
     this.shadowRoot.appendChild(restartButton)
   }
 
+  /**
+   * Resets the quiz to its initial state and returns the player to the nickname form.
+   * Clears score, hides the high-score view, and removes the restart button.
+   * @private
+   * @returns {void}
+   */
   #restartQuiz() {
-    // Reset values
     this.score = 0
     this.currentQuestionIndex = 0
-
-    // Hide the high score view
     this.#highScore.classList.add('hidden')
-
-    // Remove restart button
     this.shadowRoot.querySelector('#restart-button')?.remove()
-
-    // Restart the flow
     this.#nicknameForm.classList.remove('hidden')
-  }
-
-  #hideQuizElements() {
-    this.#quizQuestion.classList.add('hidden')
-    this.#countdownTimer.classList.add('hidden')
-  }
-
-  #showHighScore() {
-    this.#highScore.classList.remove('hidden')
-  }
-
-  #showResultMessage(success) {
-    const message = document.createElement('p')
-    message.textContent = success
-    ? `✅ Correct! Final score: ${this.score}`
-    : `❌ Wrong answer! Final score: ${this.score}`
-
-    this.shadowRoot.appendChild(message)
-    setTimeout(() => message.remove(), 5000)
   }
 
   // --- Element getters ---
@@ -345,6 +380,11 @@ class QuizApp extends HTMLElement {
     return this.shadowRoot.querySelector('countdown-timer')
   }
 
+  /**
+   * Gets the high-score component element.
+   * @private
+   * @returns {HTMLElement}
+   */
   get #highScore() {
     return this.shadowRoot.querySelector('high-score')
   }
