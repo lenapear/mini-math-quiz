@@ -8,9 +8,9 @@
  * @version 1.0.0
  */
 
-import { easyQuestions, mediumQuestions } from "../../questions.js"
-import { shuffle } from "../../shuffle.js"
-import { Calculator } from "../../calculator-module/Calculator.js"
+import { easyQuestions, mediumQuestions } from '../../questions.js'
+import { shuffle } from '../../shuffle.js'
+import { Calculator } from '../../calculator-module/Calculator.js'
 
 /**
  * @fileoverview Defines the <quiz-app> web component,
