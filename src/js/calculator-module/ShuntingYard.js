@@ -19,16 +19,16 @@ export class ShuntingYard {
       const current = infixTokens[i]
 
       if (isNumber(current)) {
-        this.handleNumber(current, outputQueue)
+        this.#handleNumber(current, outputQueue)
       } else if (isOperator(current)) {
-        while (operatorStack.length > 0 && this.hasPrecedence(operatorStack[operatorStack.length - 1], current)) {
-          this.handleOperator(outputQueue, operatorStack)
+        while (operatorStack.length > 0 && this.#hasPrecedence(operatorStack[operatorStack.length - 1], current)) {
+          this.#handleOperator(outputQueue, operatorStack)
         }
         operatorStack.push(current)
       }
     }
 
-    this.flushStack(operatorStack, outputQueue)
+    this.#flushStack(operatorStack, outputQueue)
     return outputQueue
   }
 
@@ -38,7 +38,7 @@ export class ShuntingYard {
    * @param {number} number - The number token to add.
    * @param {Array<string|number>} outputQueue - The output queue being constructed.
    */
-  handleNumber (number, outputQueue) {
+  #handleNumber (number, outputQueue) {
     outputQueue.push(number)
   }
 
@@ -48,7 +48,7 @@ export class ShuntingYard {
    * @param {Array<string|number>} outputQueue - The output queue being constructed.
    * @param {Array<string>} operatorStack - The stack of operators.
    */
-  handleOperator (outputQueue, operatorStack) {
+  #handleOperator (outputQueue, operatorStack) {
     outputQueue.push(operatorStack.pop())
   }
 
@@ -58,7 +58,7 @@ export class ShuntingYard {
    * @param {Array<string>} operatorStack - The stack of operators.
    * @param {Array<string|number>} outputQueue - The output queue being constructed.
    */
-  flushStack (operatorStack, outputQueue) {
+  #flushStack (operatorStack, outputQueue) {
     while (operatorStack.length > 0) {
       const currentOp = operatorStack.pop()
       outputQueue.push(currentOp)
@@ -72,8 +72,8 @@ export class ShuntingYard {
    * @param {string} op2 - The current operator being evaluated.
    * @returns {boolean} True if op1 has greater or equal precedence, false otherwise.
    */
-  hasPrecedence (op1, op2) {
-    return this.getPrecedence(op1) >= this.getPrecedence(op2)
+  #hasPrecedence (op1, op2) {
+    return this.#getPrecedence(op1) >= this.#getPrecedence(op2)
   }
 
   /**
@@ -83,7 +83,7 @@ export class ShuntingYard {
    * @returns {number} The precedence level (2 = high, 1 = low).
    * @throws {Error} If the operator is unknown.
    */
-  getPrecedence (operator) {
+  #getPrecedence (operator) {
     if (['*', '/'].includes(operator)) {
       return 2
     } else if (['+', '-'].includes(operator)) {

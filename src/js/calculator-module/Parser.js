@@ -12,9 +12,9 @@ export class Parser {
    * @returns {Array<string|number>} The array of validated tokens.
    */
   validateAndParse (expression) {
-    const tokenizedExpression = this.splitTokens(expression)
-    const validTokens = this.validateTokens(tokenizedExpression)
-    this.validateFormat(validTokens)
+    const tokenizedExpression = this.#splitTokens(expression)
+    const validTokens = this.#validateTokens(tokenizedExpression)
+    this.#validateFormat(validTokens)
 
     return validTokens
   }
@@ -25,7 +25,7 @@ export class Parser {
    * @param {string} expression - The user's expression input to be split.
    * @returns {Array<string|number>} The array of raw tokens.
    */
-  splitTokens (expression) {
+  #splitTokens (expression) {
     const expressionArray = expression.split('')
     const tokenizedExpression = []
     const buffer = []
@@ -33,14 +33,14 @@ export class Parser {
     for (const char of expressionArray) {
       if (char === ' ') continue
       if (isDigit(char) || isDecimal(char)) {
-        this.handleNumberChar(char, buffer)
+        this.#handleNumberChar(char, buffer)
       } else if (isOperator(char)) {
-        this.handleOperator(char, buffer, tokenizedExpression)
+        this.#handleOperator(char, buffer, tokenizedExpression)
       }
     }
 
     if (buffer.length > 0) {
-      this.flushBuffer(buffer, tokenizedExpression)
+      this.#flushBuffer(buffer, tokenizedExpression)
     }
 
     return tokenizedExpression
@@ -52,7 +52,7 @@ export class Parser {
    * @param {string|number} char - The current character being processed.
    * @param {Array<string|number>} buffer - The buffer storing number characters.
    */
-  handleNumberChar (char, buffer) {
+  #handleNumberChar (char, buffer) {
     buffer.push(char)
   }
 
@@ -63,9 +63,9 @@ export class Parser {
    * @param {Array<string|number>} buffer - The buffer storing number characters.
    * @param {Array<string|number>} tokenizedExpression - The array of collected tokens.
    */
-  handleOperator (char, buffer, tokenizedExpression) {
+  #handleOperator (char, buffer, tokenizedExpression) {
     if (buffer.length > 0) {
-      this.flushBuffer(buffer, tokenizedExpression)
+      this.#flushBuffer(buffer, tokenizedExpression)
     }
     tokenizedExpression.push(char)
   }
@@ -76,7 +76,7 @@ export class Parser {
    * @param {Array<string|number>} buffer - The buffer storing number characters.
    * @param {Array<string|number>} tokenizedExpression - The array of collected tokens.
    */
-  flushBuffer (buffer, tokenizedExpression) {
+  #flushBuffer (buffer, tokenizedExpression) {
     tokenizedExpression.push(buffer.join(''))
     buffer.length = 0
   }
@@ -87,7 +87,7 @@ export class Parser {
    * @param {Array<string|number>} tokens - The list of tokens to check.
    * @throws {Error} If the first token is an operator.
    */
-  checkFirstToken (tokens) {
+  #checkFirstToken (tokens) {
     if (isOperator(tokens[0])) {
       throw new Error('Expression cannot start with an operator')
     }
@@ -99,7 +99,7 @@ export class Parser {
    * @param {Array<string|number>} tokens - The list of tokens to check.
    * @throws {Error} If the last token is an operator.
    */
-  checkLastToken (tokens) {
+  #checkLastToken (tokens) {
     if (isOperator(tokens[tokens.length - 1])) {
       throw new Error('Expression cannot end with an operator')
     }
@@ -111,7 +111,7 @@ export class Parser {
    * @param {Array<string|number>} tokens - The list of tokens to check.
    * @throws {Error} If two numbers or two operators occur in a row.
    */
-  checkSequence (tokens) {
+  #checkSequence (tokens) {
     for (let i = 1; i < tokens.length; i++) {
       const previous = tokens[i - 1]
       const current = tokens[i]
@@ -133,7 +133,7 @@ export class Parser {
    * @returns {Array<string|number>} The array of validated tokens.
    * @throws {Error} If an invalid token is found.
    */
-  validateTokens (tokens) {
+  #validateTokens (tokens) {
     const validTokens = []
     for (let i = 0; i < tokens.length; i++) {
       const currentToken = tokens[i]
@@ -154,9 +154,9 @@ export class Parser {
    *
    * @param {Array<string|number>} tokens - The tokens to be validated.
    */
-  validateFormat (tokens) {
-    this.checkFirstToken(tokens)
-    this.checkLastToken(tokens)
-    this.checkSequence(tokens)
+  #validateFormat (tokens) {
+    this.#checkFirstToken(tokens)
+    this.#checkLastToken(tokens)
+    this.#checkSequence(tokens)
   }
 }

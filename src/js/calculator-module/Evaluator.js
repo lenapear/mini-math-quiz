@@ -14,9 +14,9 @@ export class Evaluator {
   evaluate (postfixExpression) {
     const stack = []
     for (const token of postfixExpression) {
-      this.processToken(token, stack)
+      this.#processToken(token, stack)
     }
-    return this.getFinalResult(stack)
+    return this.#getFinalResult(stack)
   }
 
   /**
@@ -25,11 +25,11 @@ export class Evaluator {
    * @param {string|number} token - The current token being processed.
    * @param {Array<number>} stack - The stack used to evaluate the expression.
    */
-  processToken (token, stack) {
+  #processToken (token, stack) {
     if (isNumber(token)) {
-      this.processNumber(token, stack)
+      this.#processNumber(token, stack)
     } else if (isOperator(token)) {
-      this.processOperator(token, stack)
+      this.#processOperator(token, stack)
     }
   }
 
@@ -39,7 +39,7 @@ export class Evaluator {
    * @param {number} number - The number token to add.
    * @param {Array<number>} stack - The stack used to evaluate the expression.
    */
-  processNumber (number, stack) {
+  #processNumber (number, stack) {
     stack.push(number)
   }
 
@@ -49,10 +49,10 @@ export class Evaluator {
    * @param {string} operator - The operator to apply.
    * @param {Array<number>} stack - The stack used to evaluate the expression.
    */
-  processOperator (operator, stack) {
+  #processOperator (operator, stack) {
     const rightOperand = stack.pop()
     const leftOperand = stack.pop()
-    const calculationResult = this.calculate(leftOperand, rightOperand, operator)
+    const calculationResult = this.#calculate(leftOperand, rightOperand, operator)
     stack.push(calculationResult)
   }
 
@@ -63,7 +63,7 @@ export class Evaluator {
    * @returns {number} The final evaluated result.
    * @throws {Error} If the stack does not contain exactly one result.
    */
-  getFinalResult (stack) {
+  #getFinalResult (stack) {
     if (stack.length === 1) {
       const finalResult = stack[0]
       return finalResult
@@ -79,16 +79,16 @@ export class Evaluator {
    * @param {string} operator - The operator to apply (+, -, *, /).
    * @returns {number} The calculated result.
    */
-  calculate (leftOperand, rightOperand, operator) {
+  #calculate (leftOperand, rightOperand, operator) {
     switch (operator) {
       case '+':
-        return this.addition(leftOperand, rightOperand)
+        return this.#addition(leftOperand, rightOperand)
       case '-':
-        return this.subtraction(leftOperand, rightOperand)
+        return this.#subtraction(leftOperand, rightOperand)
       case '*':
-        return this.multiplication(leftOperand, rightOperand)
+        return this.#multiplication(leftOperand, rightOperand)
       case '/':
-        return this.division(leftOperand, rightOperand)
+        return this.#division(leftOperand, rightOperand)
     }
   }
 
@@ -99,7 +99,7 @@ export class Evaluator {
    * @param {number} b - The second operand.
    * @returns {number} The sum of a and b.
    */
-  addition (a, b) {
+  #addition (a, b) {
     return a + b
   }
 
@@ -110,7 +110,7 @@ export class Evaluator {
    * @param {number} b - The second operand.
    * @returns {number} The difference between a and b.
    */
-  subtraction (a, b) {
+  #subtraction (a, b) {
     return a - b
   }
 
@@ -121,7 +121,7 @@ export class Evaluator {
    * @param {number} b - The second operand.
    * @returns {number} The product of a and b.
    */
-  multiplication (a, b) {
+  #multiplication (a, b) {
     return a * b
   }
 
@@ -132,7 +132,7 @@ export class Evaluator {
    * @param {number} b - The denominator.
    * @returns {number} The quotient of a divided by b.
    */
-  division (a, b) {
+  #division (a, b) {
     return a / b
   }
 }
