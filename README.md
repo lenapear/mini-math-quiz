@@ -1,8 +1,6 @@
 # Mini Math Quiz
 
 **Mini Math Quiz** is a lightweight, event-driven web application that challenges players to solve as many math problems as possible within a limited time.  
-It’s built entirely with **Vanilla JavaScript** using **Web Components**, following **Clean Code** principles and an **object-oriented** architecture.  
-The project reuses the **Calculator module** from Laboration 2 to evaluate mathematical expressions dynamically.
 
 🕹️ **Play the live version here:** [https://minimathquiz.netlify.app/](https://minimathquiz.netlify.app/)
 
