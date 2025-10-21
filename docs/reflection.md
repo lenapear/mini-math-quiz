@@ -1,5 +1,5 @@
 # Reflection
-**Note:** Check out [reflection_original.md]() for the original written text and prompt used to rewrite this text for better grammar and phrasing.
+**Note:** Check out [reflection_original.md](https://github.com/lenapear/mini-math-quiz/blob/main/docs/reflection_original.md) for the original written text and prompt used to rewrite this text for better grammar and phrasing.
 
 ### Chapter 2
 Key takeaways from this chapter:
