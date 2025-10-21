@@ -337,8 +337,13 @@ class QuizApp extends HTMLElement {
   #restartQuiz() {
     this.score = 0
     this.currentQuestionIndex = 0
+    this.difficulty = ''
+    this.questions = []
     this.#highScore.classList.add('hidden')
+    this.#countdownTimer.classList.add('hidden')
     this.shadowRoot.querySelector('#restart-button')?.remove()
+    this.shadowRoot.querySelectorAll('p').forEach(p => p.remove())
+    this.#countdownTimer.stopTimer()
     this.#nicknameForm.classList.remove('hidden')
   }
 
