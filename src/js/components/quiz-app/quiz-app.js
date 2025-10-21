@@ -248,7 +248,7 @@ class QuizApp extends HTMLElement {
   this.#countdownTimer.stopTimer()
   this.#hideQuizElements()
   this.#showHighScore()
-  this.#showResultMessage()
+  this.#showResultMessage(success)
   
   if (success) {
     this.#highScore.updateScores({

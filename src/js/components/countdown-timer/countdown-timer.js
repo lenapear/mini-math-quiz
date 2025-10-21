@@ -77,7 +77,7 @@ class CountdownTimer extends HTMLElement {
    */
   #updateCountdown() {
     this.#countdown.textContent = this.timeLeft
-    console.log('Time left:', this.timeLeft) // ❗️ debugger
+    console.log('Time left:', this.timeLeft)
 
     if (this.timeLeft <= 0) {
       this.#handleTimeUp()

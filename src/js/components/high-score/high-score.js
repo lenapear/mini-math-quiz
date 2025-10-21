@@ -90,7 +90,7 @@ class HighScore extends HTMLElement {
    */
   #renderScores(scores) {
     this.#clearScoreList()
-    console.log('Rendering', scores) // 🚩
+    console.log('Rendering', scores)
 
     scores.forEach((entry, index) => {
       const row = document.createElement('tr')
